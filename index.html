@@ -82,7 +82,6 @@ details.card summary{cursor:pointer}
 <main id="app"></main><footer>Kompas Karya · Panduan Misi Perjalanan Proyek · Merchandise Pariwisata Budaya Jawa Timur</footer></div></div>
 <div id="tt"></div><div id="md"></div>
 
-<!-- Memuat Firebase SDK melalui Compat URL agar kompatibel sempurna tanpa tag type="module" -->
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
@@ -91,7 +90,6 @@ details.card summary{cursor:pointer}
 const appId = typeof __app_id !== 'undefined' ? __app_id : 'kompas-karya';
 const initialAuthToken = typeof __initial_auth_token !== 'undefined' ? __initial_auth_token : null;
 
-// Konfigurasi Baru yang Anda berikan
 let fbc = {
   apiKey: "AIzaSyB7ACnJZyhnOWX2jK0335IKfKqn6yxmfN4",
   authDomain: "kompas-karya-ad817.firebaseapp.com",
@@ -102,13 +100,11 @@ let fbc = {
   measurementId: "G-0QG7EZ1WL9"
 };
 
-// Inisialisasi Firebase
 firebase.initializeApp(fbc);
 const auth = firebase.auth();
 const db = firebase.firestore();
 let fbActive = true;
 
-// Helper Path Wajib dari Sistem untuk menghindar blokir root-level
 const getColl = (name) => db.collection('artifacts').doc(appId).collection('public').doc('data').collection(name);
 
 const PASS="132465",D1="https://drive.google.com/drive/folders/1OA-T8jLVydIbctEf5n9iP8AImjHR4hWN?usp=drive_link",D2="https://drive.google.com/drive/folders/1J2-mA05FuBsHgBWr_EQLWSaDeMXXXhxA";
@@ -125,7 +121,7 @@ const ST=[
 
 const E=[["","Semangat"],["","Senang"],["","Biasa saja"],["","Cemas"],["","Lelah"],["","Sedih"]];
 const SN=["Belum Dimulai","Dalam Proses","Perlu Revisi","Selesai Terverifikasi"],SY=["–","…","!","✓"],SC=["#9a8c7d","#c27a10","#b3261e","#2f7d4f"];
-const HOW=[["📖","Baca Tujuan Tahap","Pahami target sebelum mulai."],["😊","Check-in Emosi","Pilih perasaanmu sebelum bekerja."],["","Kerjakan Checklist","Satu checklist per pertemuan; simpan dan lanjutkan di pertemuan berikutnya."],["","Kumpulkan Tugas","Klik ikon pengumpulan ke Google Drive."],["","Umpan Balik Guru","Baca masukan dan sampaikan keluhanmu."],["🚀","Lanjut Tahap","Setelah guru menyetujui, lanjut!"]];
+const HOW=[["📖","Baca Tujuan Tahap","Pahami target sebelum mulai."],["😊","Check-in Emosi","Pilih perasaanmu sebelum bekerja."],["","Kerjakan Checklist","Satu checklist per pertemuan; simpan dan lanjutkan di pertemuan berikutnya."],["","Kumpulkan Tugas","Klik tombol pengumpulan ke Google Drive."],["","Umpan Balik Guru","Baca masukan dan sampaikan keluhanmu."],["🚀","Lanjut Tahap","Setelah guru menyetujui, lanjut!"]];
 const OUT=[[111.45,-6.80],[111.75,-6.86],[112.05,-6.88],[112.35,-6.88],[112.58,-7.08],[112.72,-7.20],[112.80,-7.40],[112.92,-7.62],[113.20,-7.72],[113.60,-7.72],[113.98,-7.70],[114.25,-7.80],[114.42,-8.00],[114.38,-8.25],[114.40,-8.45],[114.50,-8.70],[114.25,-8.72],[113.90,-8.45],[113.45,-8.35],[113.05,-8.25],[112.65,-8.40],[112.25,-8.32],[111.85,-8.30],[111.45,-8.30],[111.10,-8.20],[110.95,-8.00],[111.00,-7.65],[111.15,-7.35],[111.30,-7.10]],MAD=[[112.72,-7.14],[112.95,-7.00],[113.25,-6.92],[113.6,-6.88],[113.95,-6.92],[114.2,-7.0],[114.12,-7.1],[113.8,-7.13],[113.5,-7.12],[113.2,-7.18],[112.92,-7.2]];
 const sm=a=>{const p=a.map(PJ),n=p.length,f=v=>v.toFixed(1);let d="M"+f(p[0][0])+","+f(p[0][1]);for(let i=0;i<n;i++){const p0=p[(i+n-1)%n],p1=p[i],p2=p[(i+1)%n],p3=p[(i+2)%n];d+="C"+f(p1[0]+(p2[0]-p0[0])/6)+","+f(p1[1]+(p2[1]-p0[1])/6)+" "+f(p2[0]-(p3[0]-p1[0])/6)+","+f(p2[1]-(p3[1]-p1[1])/6)+" "+f(p2[0])+","+f(p2[1])}return d+"Z"};
 const PJ=a=>[(a[0]-110.8)*100,(-a[1]-6.6)*100],poly=a=>"M"+a.map(p=>PJ(p).map(v=>v.toFixed(1)).join(",")).join("L")+"Z";
@@ -139,12 +135,7 @@ const su=()=>sv("gps3u",UI),now=()=>new Date().toLocaleString("id-ID",{day:"nume
 const gd=g=>D[g]||(D[g]={mem:Array.from({length:6},()=>({n:"",t:""})),st:{},ci:[],iss:[],rf:[]});
 const cl=(g,s)=>{const d=gd(g);return d.st[s]||(d.st[s]={st:0,ck:[],fb:""})};
 
-// Helper untuk membaca format lama/baru secara fleksibel
-const MN=m=>(m&&m.n!==undefined)?m.n:(m?(m[0]||""):"");
-const MT=m=>(m&&m.t!==undefined)?m.t:(m?(m[1]||""):"");
-
 function pst(g){
-  // Sanitasi 100%: Mengubah sisa array menjadi object untuk menghindari error nested array
   if(D[g].mem) D[g].mem = D[g].mem.map(m=>Array.isArray(m)?{n:m[0]||"",t:m[1]||""}:m);
   if(D[g].st) Object.values(D[g].st).forEach(s=>{ if(s.mem) s.mem = s.mem.map(m=>Array.isArray(m)?{n:m[0]||"",t:m[1]||""}:m); });
   sv("gps3",D);
@@ -153,8 +144,7 @@ function pst(g){
     try {
       const cleanData = JSON.parse(JSON.stringify(D[g]));
       getColl('gps3').doc("g"+g).set(cleanData, { merge: true }).catch(e=>{
-        console.error("Save error:", e);
-        if(e.code==='permission-denied') { fbActive = false; toast("Gagal simpan (Izin Database Firestore Anda Ditolak)"); }
+        if(e.code==='permission-denied') { fbActive = false; toast("Gagal simpan (Izin Database Firestore Ditolak)"); }
       });
     } catch(e) {}
   }
@@ -168,6 +158,12 @@ const ssel=()=>`<select onchange="UI.stg=+this.value;su();go()">${ST.map((x,i)=>
 
 function pick(i){const n=$("#gn");if(n)TMP=n.value;UI.sel=i;delete UI.mus;su();if(typeof pl !== 'undefined' && pl)play();go()}
 function nav(r){dr(false);if(!UI.in&&r!="home"&&r!="guru"){toast("Isi nama kelompok dan klik Masuk dulu ya");r="home"}UI.r=r;su();go();scrollTo(0,0)}
+
+// Fungsi Pembuka Link Drive secara Aman (Mencegah Pemblokiran Pop-up)
+function openDrive(url) {
+  if(!url) { toast("Link Drive belum diatur oleh guru"); return; }
+  window.open(url, '_blank');
+}
 
 const V={
 home(){const g=UI.sel,G=GR[g],a=act(g),I=UI.in;
@@ -190,7 +186,7 @@ const info=lk?`<div class="note lock">Tahap ini sudah dikerjakan & tersimpan. Kl
 body=`${l?`<div class="card row" style="justify-content:space-between"><span>Check-in: <b>${E[l.e][1]}</b> <span class="mut">· ${esc(l.d)}</span></span>${lk?"":`<button class="btn o s" onclick="$('#ck2').hidden=false;this.hidden=true">Check-in lagi</button>`}</span></div><div class="card" id="ck2" hidden>${emo}<input id="cn" placeholder="Catatan singkat"></div>`:""}
 <div class="card"><h3>Anggota & Tugas — Tahap ${s+1}</h3><p class="mut" style="margin:0 0 6px">Isi nama & tugas (otomatis tersimpan online ke Ruang Guru).</p>${c.mem.map((m,i)=>`<div class="grid g2" style="gap:8px;margin:6px 0"><input placeholder="Nama murid ${i+1}" value="${esc(MN(m))}" ${lk?"disabled":""} onchange="mset(${i},'n',this.value)"><input placeholder="Tugas di tahap ini" value="${esc(MT(m))}" ${lk?"disabled":""} onchange="mset(${i},'t',this.value)"></div>`).join("")}</div>
 <div class="win"><div class="wb"><span>Tahap-${s+1}_${S.n.replace(/\W+/g,"")}.${EXT[s]}</span></div><div class="wc"><h2>Tahap ${s+1}: ${esc(S.n)} ${tag(c.st)}</h2><p><b>Tujuan:</b> ${esc(S.d)}</p><h3>Checklist (${nck(g,s)}/${S.c.length})</h3>${info}${S.c.map((x,i)=>{const on=!!c.ck[i],ds=lk||(!on&&cap)||(on&&!free&&c.cd[i]!=td);return `<label class="chk ${ds&&!on?"dim":""}"><input type="checkbox" ${on?"checked":""} ${ds?"disabled":""} onchange="chk(${i},this.checked)">${esc(x)}${c.cd[i]?`<small class="mut"> · ${esc(c.cd[i])}</small>`:""}</label>`}).join("")}
-<p class="row" style="margin-top:14px"><a class="btn d" href="${esc(S.l)}" target="_blank" rel="noopener">Pengumpulan Tugas (Drive)</a>${c.st==2?`<button class="btn o" onclick="resend()">Kirim ulang</button>`:""}</p>
+<p class="row" style="margin-top:14px"><button class="btn d" onclick="openDrive('${esc(S.l)}')">Pengumpulan Tugas (Drive)</button>${c.st==2?`<button class="btn o" onclick="resend()">Kirim ulang</button>`:""}</p>
 <p class="row">${lk?`<button class="btn o" onclick="editStage()">Edit / Revisi</button>`:`<button class="btn o" onclick="toast('Progres tersimpan di database')">Simpan Progres</button><button class="btn" onclick="lanjut()">${s<7?"Simpan & Lanjut ke Tahap Berikutnya":"Selesai"}</button>`}</p></div></div>
 <div class="card"><h3>Umpan Balik Guru</h3><p class="${c.fb?"":"mut"}">${c.fb?esc(c.fb):"Belum ada umpan balik."}</p><h3>Keluhan / Kendala</h3><textarea id="kd"></textarea><p><button class="btn s" onclick="kendala()">Kirim ke guru</button></p>${my.map(q=>`<div class="mut" style="border-top:1px dashed var(--line);padding:6px 0">${esc(q.d)} — ${esc(q.t)}</div>`).join("")}</div>`}
 return `<div class="eye">Misi Kita</div><h1>Kelompok ${G.n}</h1>${tabs}<div class="stw t${s}">${banner}${body}</div>`},
@@ -215,7 +211,7 @@ guru(){
   
   const teacherHeader = `<div class="row" style="justify-content:space-between"><div><div class="eye">Monitoring</div><h1>Ruang Guru</h1></div><button class="btn o s" onclick="logout()">Keluar</button></div>${GT()}<p class="mut">${auth.currentUser?"Data terhubung secara realtime ke internet.":"Menunggu koneksi internet..."} Klik kotak tahap untuk validasi.</p>`;
   const statsBox = `<div class="stat"><div class="card"><b>${avg}%</b>Rata-rata progres</div><div class="card"><b>${rev}</b>Perlu revisi</div><div class="card"><b>${kel}</b>Keluhan</div></div>`;
-  const driveBox = `<div class="card"><h3>Folder Tugas (Google Drive)</h3><div class="row">${ST.map((x,i)=>`<a class="btn d s" href="${esc(x.l)}" target="_blank" rel="noopener">Tahap ${i+1}</a>`).join("")}</div></div>`;
+  const driveBox = `<div class="card"><h3>Folder Tugas (Google Drive)</h3><div class="row">${ST.map((x,i)=>`<button class="btn d s" onclick="openDrive('${esc(x.l)}')">Tahap ${i+1}</button>`).join("")}</div></div>`;
   
   const tableContent = GR.map((x, gIdx) => `<tr><td>${x.n}${gd(gIdx).gn ? `<div class="mut" style="font-size:12px">${esc(gd(gIdx).gn)}</div>` : ""}</td>${ST.map((_, sIdx) => {
       const t = cl(gIdx, sIdx).st;
@@ -224,7 +220,7 @@ guru(){
   
   const tableBox = `<div class="card tw"><table><tr><th>Kelompok</th>${ST.map((_,i)=>`<th>${i+1}</th>`).join("")}<th>Mood</th><th>Progres</th></tr>${tableContent}</table></div><p class="row mut">${SN.map((n,i)=>`<span><span style="color:${SC[i]}">●</span> ${n}</span>`).join("")}</p>`;
   
-  const stageDetail = `<div class="card" style="border-top:5px solid ${GR[tg].c}"><h3>${GR[tg].n} · Tahap ${ts+1}: ${esc(ST[ts].n)} ${tag(c.st)}</h3><p class="mut">${c.ts?"Disimpan: "+esc(c.ts)+" · ":""}Check-in: ${cie.length?cie.map(x=>`${E[x.e][0]} ${E[x.e][1]}`).join(", "):"belum ada"}</p><div>${ST[ts].c.map((t,k)=>`<div>${c.ck[k]?"✓":"○"} ${esc(t)}${c.cd&&c.cd[k]?` <span class="mut">· ${esc(c.cd[k])}</span>`:""}</div>`).join("")}</div>${memT(c)}<p class="row"><a class="btn d s" href="${esc(ST[ts].l)}" target="_blank" rel="noopener">Lihat tugas (Drive)</a></p><p class="row">${[1,2,3].map(i=>`<button class="btn ${c.st==i?"":"o"} s" onclick="setst(${tg},${ts},${i})">${SN[i]}</button>`).join("")}</p><textarea id="fb" placeholder="Umpan balik guru">${esc(c.fb)}</textarea><p><button class="btn s" onclick="cl(${tg},${ts}).fb=$('#fb').value;pst(${tg});toast('Tersimpan')">Simpan Umpan Balik</button></p></div>`;
+  const stageDetail = `<div class="card" style="border-top:5px solid ${GR[tg].c}"><h3>${GR[tg].n} · Tahap ${ts+1}: ${esc(ST[ts].n)} ${tag(c.st)}</h3><p class="mut">${c.ts?"Disimpan: "+esc(c.ts)+" · ":""}Check-in: ${cie.length?cie.map(x=>`${E[x.e][0]} ${E[x.e][1]}`).join(", "):"belum ada"}</p><div>${ST[ts].c.map((t,k)=>`<div>${c.ck[k]?"✓":"○"} ${esc(t)}${c.cd&&c.cd[k]?` <span class="mut">· ${esc(c.cd[k])}</span>`:""}</div>`).join("")}</div>${memT(c)}<p class="row"><button class="btn d s" onclick="openDrive('${esc(ST[ts].l)}')">Lihat tugas (Drive)</button></p><p class="row">${[1,2,3].map(i=>`<button class="btn ${c.st==i?"":"o"} s" onclick="setst(${tg},${ts},${i})">${SN[i]}</button>`).join("")}</p><textarea id="fb" placeholder="Umpan balik guru">${esc(c.fb)}</textarea><p><button class="btn s" onclick="cl(${tg},${ts}).fb=$('#fb').value;pst(${tg});toast('Tersimpan')">Simpan Umpan Balik</button></p></div>`;
   
   const feedbackBoxes = `<h3>Check-in Emosi, Keluhan & Refleksi per Kelompok</h3>` + GR.map((x, gIdx) => {
     const d = gd(gIdx);
@@ -321,9 +317,9 @@ function lanjutHari(){const g=UI.sel,c=cl(g,UI.stg);c.ul=today();pst(g);toast("S
 function editStage(){const g=UI.sel,c=cl(g,UI.stg);c.fin=false;c.ed=true;pst(g);toast("Mode edit aktif");go()}
 const memT=c=>c.mem&&c.mem.some(m=>MN(m)||MT(m))?`<p class="mut" style="margin:8px 0 2px"><b>Anggota & tugas tahap ini</b></p>${c.mem.filter(m=>MN(m)||MT(m)).map(m=>`<div>${esc(MN(m)||"-")} — ${esc(MT(m)||"-")}</div>`).join("")}`:`<p class="mut">Anggota & tugas belum diisi.</p>`;
 const GT=()=>`<p class="row"><button class="btn ${UI.gt=="e"?"o":""} s" onclick="UI.gt='p';su();go()">Pantau</button><button class="btn ${UI.gt=="e"?"":"o"} s" onclick="UI.gt='e';su();go()">Edit Konten</button></p>`;
-function edV(){return `<div class="row" style="justify-content:space-between"><div><div class="eye">Pengaturan</div><h1>Ruang Guru</h1></div><button class="btn o s" onclick="logout()">Keluar</button></div>${GT()}<p class="mut">Ubah nama daerah, tahap, dan checklist (satu baris = satu item).</p>
+function edV(){return `<div class="row" style="justify-content:space-between"><div><div class="eye">Pengaturan</div><h1>Ruang Guru</h1></div><button class="btn o s" onclick="logout()">Keluar</button></div>${GT()}<p class="mut">Ubah nama daerah, tahap, dan checklist (kosongkan link jika ingin menghapusnya).</p>
 <h3>Daerah (nama · tema)</h3>${GR.map((x,i)=>`<div class="grid g2" style="gap:8px;margin:6px 0"><input id="eg${i}n" value="${esc(x.n)}"><input id="eg${i}t" value="${esc(x.t)}"></div>`).join("")}
-<h3>Tahap</h3>${ST.map((x,i)=>`<details class="card"><summary><b>Tahap ${i+1} — ${esc(x.n)}</b></summary><div class="grid g2" style="gap:8px;margin-top:8px"><input id="es${i}n" value="${esc(x.n)}" placeholder="Nama tahap"><input id="es${i}s" value="${esc(x.s)}" placeholder="Subjudul"></div><p><textarea id="es${i}d" placeholder="Tujuan">${esc(x.d)}</textarea></p><p><textarea id="es${i}c" style="min-height:120px" placeholder="Checklist">${esc(x.c.join("\n"))}</textarea></p><input id="es${i}l" value="${esc(x.l)}" placeholder="Link Drive"></details>`).join("")}
+<h3>Tahap</h3>${ST.map((x,i)=>`<details class="card"><summary><b>Tahap ${i+1} — ${esc(x.n)}</b></summary><div class="grid g2" style="gap:8px;margin-top:8px"><input id="es${i}n" value="${esc(x.n)}" placeholder="Nama tahap"><input id="es${i}s" value="${esc(x.s)}" placeholder="Subjudul"></div><p><textarea id="es${i}d" placeholder="Tujuan">${esc(x.d)}</textarea></p><p><textarea id="es${i}c" style="min-height:120px" placeholder="Checklist">${esc(x.c.join("\n"))}</textarea></p><input id="es${i}l" value="${esc(x.l)}" placeholder="Link Drive (kosongkan jika tidak ada)"></details>`).join("")}
 <p class="row"><button class="btn" onclick="edSave()">Simpan Perubahan</button><button class="btn o" onclick="edReset(this)">Kembalikan bawaan</button></p>`}
 
 function cput(){
@@ -336,7 +332,22 @@ function cput(){
   }
 }
 
-function edSave(){const gr=GR.map((x,i)=>({n:$("#eg"+i+"n").value.trim()||x.n,t:$("#eg"+i+"t").value.trim()||x.t}));const st=ST.map((x,i)=>{const c=$("#es"+i+"c").value.split("\n").map(t=>t.trim()).filter(Boolean);return{n:$("#es"+i+"n").value.trim()||x.n,s:$("#es"+i+"s").value.trim(),d:$("#es"+i+"d").value.trim(),c:c.length?c:x.c,l:$("#es"+i+"l").value.trim()||x.l}});cfg={gr,st};apply(cfg);cput();toast("Perubahan disimpan");go()}
+function edSave(){
+  const gr=GR.map((x,i)=>({n:$("#eg"+i+"n").value.trim()||x.n,t:$("#eg"+i+"t").value.trim()||x.t}));
+  const st=ST.map((x,i)=>{
+    const c=$("#es"+i+"c").value.split("\n").map(t=>t.trim()).filter(Boolean);
+    const linkVal = $("#es"+i+"l").value.trim();
+    return{
+      n:$("#es"+i+"n").value.trim()||x.n,
+      s:$("#es"+i+"s").value.trim(),
+      d:$("#es"+i+"d").value.trim(),
+      c:c.length?c:x.c,
+      l:linkVal // Mengizinkan string kosong untuk menghapus link
+    };
+  });
+  cfg={gr,st};apply(cfg);cput();toast("Perubahan disimpan");go()
+}
+
 function edReset(b){if(!b.dataset.s){b.dataset.s=1;b.textContent="Klik lagi kembalikan";return}cfg={gr:JSON.parse(JSON.stringify(GR)).map(x=>({n:x.n,t:x.t})),st:JSON.parse(JSON.stringify(ST))};apply(cfg);cput();toast("Dikembalikan");go()}
 
 const EXT=["pdf","indd","psd","ai","cdr","dieline.ai","prproj","pptx"];
@@ -351,7 +362,6 @@ function sync(){if(/INPUT|TEXTAREA|SELECT/.test(document.activeElement.tagName))
 
 go();
 
-// Menjalankan Otentikasi sebelum memanggil database sesuai mandat keamanan
 async function initFB() {
     try {
         if (initialAuthToken) {
@@ -366,7 +376,7 @@ async function initFB() {
                 const t = $("#tt");
                 t.innerHTML = "<b>Mode Lokal (Akses Database Ditolak)</b><br>Pastikan Rules Firestore Anda tertulis:<br><code>allow read, write: if true;</code>";
                 t.style.display = "block";
-                t.style.background = "#b3261e"; // Merah
+                t.style.background = "#b3261e";
                 t.style.maxWidth = "400px";
                 setTimeout(() => { t.style.display = "none"; }, 8000);
             }
@@ -392,12 +402,11 @@ async function initFB() {
         const t = $("#tt");
         t.innerHTML = "<b>Login Firebase Gagal!</b><br>Aktifkan <b>Anonymous</b> di menu Authentication Firebase.";
         t.style.display = "block";
-        t.style.background = "#b3261e"; // Merah
+        t.style.background = "#b3261e";
         setTimeout(() => { t.style.display = "none"; }, 8000);
     }
 }
 
-// Mulai Sinkronisasi
 initFB();
 
 </script>
